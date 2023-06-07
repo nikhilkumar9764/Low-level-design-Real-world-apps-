@@ -1,0 +1,126 @@
+Hotel’s Search & Booking Platform:
+
+Problem :
+
+Your aim is to build an application for a hotels’ search and booking platform where users can list a hotel and update availability/inventory and price of the rooms of the property,
+ and other users can book the hotel.
+
+Few basic :
+
+You need to provide the following options:
+
+Users can onboard hotels (hotel -> title, city, star rating, room types).
+Note - Room types can be kept limited for the sake of simplicity.
+Add Inventory and nightly pricing for the provided room type of the hotel.
+Nightly Price is the rate (amount of money) charged for each night of your stay (like checkin 26/10/22 to checkout 27/10/22).
+The inventory added here would be on a nightly basis.
+
+
+Search: Users can search for listed hotels (only hotels whose inventory is available should appear in results). They can use a combination of:
+Check in date (mandatory)
+Checkout date (mandatory)
+City.
+Price range.
+Users can choose any set of parameters above for search (checkin and checkout are mandatory).
+
+Sort by Price - can be passed in search request. (asc price and minimum priced room of a hotel can be taken for sorting)
+Book - Users can only book available rooms of the hotels listed by other users.
+Cancel Booking - Allow users to cancel their own bookings.
+
+ViewInventory -  Users can only view inventory available and inventory sold out for their own listed/on-boarded properties.
+ViewBookings - Users can only view bookings done by themselves.
+ViewMyPropertyBookings - Users can only view bookings for their own listed/on-boarded properties.
+
+Notes :
+It is recommended to log/print the complete state of data structures after each action.
+
+Bonus:
+Update Inventory and nightly pricing for the provided room of the hotel for the range of provided check in dates. This will override
+the nightly price for given dates provided
+while addition.
+Nightly Price is the rate (amount of money) charged for each night of your stay. Like request for check in date 26-10-2022 will update price and inventory
+ for checkin 26-10-2022 and checkout 27-10-2022.
+Example :
+
+Input : hotel Hotel My Place,room room1, price 4000, rooms_available 3, checkInDates [25-10-2022:23-11-2022]
+Operation -> Price and rooms will be updated for below checkin and checkout dates
+Checkin 25-10-2022 checkout 26-10-2022
+Checkin 26-10-2022 checkout 27-10-2022
+…upto…
+Checkin 23-11-2022 checkout 24-11-2022
+
+
+Below are few sample inputs/outputs (not in valid order though - just only for reference regarding how input and output can be) :
+
+Input and Output (You may change the input-output format without changing the functionality to suit your needs):
+→ is input
+← is output
+
+→ user:’tej’, command:’OnboardProperty’
+← Enter the property details:
+→ title Hotel My Place, city Bangalore, star rating 3, rooms [room1:”Deluxe Room”,room2: “Luxury Room”]
+← Onboarded successfully.
+
+→ user:’tej’, command:’OnboardProperty’
+← Enter the property details:
+→ title Hotel My Hotel, city Delhi, star rating 4,  rooms [room4:”Basic Room”,room6:”Suite Room”,room8:”Villa Room”]
+← Onboarded successfully.
+
+→ user:’tej’, command:’AddInventory’
+← Enter details:
+→ hotel Hotel My Place,room room1, price 3000, rooms_available 3
+← Price and Inventory added Successfully.
+→ user:’tej’, command:’AddInventory’
+← Enter details:
+→ hotel Hotel My Hotel,room room6, price 2500, rooms_available 2
+← Price and Inventory added Successfully.
+
+
+
+→ user:’raj’, command:search - city Bangalore, price_range 2500-10500, star_rating 3, checkin 25-10-2022, checkout 28-10-2022,
+← title Hotel My Place, rooms [”Deluxe Room”-9000]
+
+->user:’raj’, command:book - title Hotel My Place, room room1, checkin 25-10-2022, checkout 28-10-2022
+← Congratulations your booking is confirmed. Id - yzzz.
+
+
+
+-> user:’raj’, view_bookings
+← Id - yzzz, title Hotel My Place, room room1, checkin 25-10-2022, checkout 28-10-2022
+
+-> user:’raj’, cancel_booking {Id - yzzz}
+← Id - yzzz : Canceled successfully
+
+
+-> user:’tej’, view_inventory
+← hotel Hotel My Place,room room1
+	← checkin 25-10-2022, rooms_available=2, rooms_sold_out=1
+	← checkin 26-10-2022, rooms_available=2, rooms_sold_out=1
+…
+
+← hotel Hotel My Hotel,room room6
+	…
+
+
+
+ASSUMPTION :
+YOU CAN TREAT HOTEL TITLE AS UNIQUE.
+
+Guidelines:
+Input can be read from a file or STDIN or coded in a driver method.
+Output can be written to a file or STDOUT.
+Store all interim/output data in-memory data structures. The usage of databases is not allowed.
+Restrict internet usage to looking up syntax.
+Language should be Java only.
+Save your code/project by your name and email it or upload on the google drive link provided. Your program will be executed on another machine. So, explicitly specify dependencies, if any, in your email.
+
+Expectations:
+The code should be demo-able (very important). The code  should be functionally correct and complete.
+At the end of this interview round, an interviewer will provide multiple inputs to your program for which it is expected to work
+The code should handle edge cases properly and fail gracefully. Add suitable exception handling, wherever applicable.
+An example would be to display an error message saying “Check in date has already passed.” when the user is trying to book a property with a check in date of past.
+The code should have a good object-oriented design.
+The code should be readable, modular, testable, and extensible. Use intuitive names for your variables, methods, and classes.
+It should be easy to add/remove functionality without rewriting a lot of code.
+Do not write a monolithic code.
+Don’t use any databases.
