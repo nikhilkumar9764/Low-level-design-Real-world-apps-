@@ -6,7 +6,6 @@ import java.util.List;
 public class User
 {
     private String username;
-
     UserType u;
     private List<Bookings> bookings_made;
     private List<Hotel> hotels_booked;
@@ -47,11 +46,6 @@ public class User
         bookings_made.add(b1);
     }
 
-    public void removeBooking(Bookings b1)
-    {
-        bookings_made.remove(b1);
-    }
-
     public List<Inventory> view_inventory(Date search)
     {
         List<Inventory> lres=new ArrayList<>();
@@ -70,6 +64,7 @@ public class User
         }
         return lres;
     }
+
 
 
 

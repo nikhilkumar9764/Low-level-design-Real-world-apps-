@@ -1,6 +1,8 @@
 package cleartrip_question;
 
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Map;
 
 public class Inventory
@@ -9,15 +11,15 @@ public class Inventory
      private Room r1;
      private double price;
      private int rooms_avail;
-     private Map<Date, Integer> book_status;
+     private Map<LocalDate, Integer> book_status;
 
-     public Inventory(Hotel h1, Room r1, double price, int rooms_avail, Map<Date, Integer> book_status)
+     public Inventory(Hotel h1, Room r1, double price, int rooms_avail)
      {
           this.h1 = h1;
           this.r1 = r1;
           this.price = price;
           this.rooms_avail = rooms_avail;
-          this.book_status = book_status;
+          this.book_status = new HashMap<>();
      }
 
      public Hotel getH1() {
@@ -52,13 +54,11 @@ public class Inventory
           this.rooms_avail = rooms_avail;
      }
 
-
-
-     public Map<Date, Integer> getBook_status() {
+     public Map<LocalDate, Integer> getBook_status() {
           return book_status;
      }
 
-     public void setBook_status(Map<Date, Integer> book_status) {
-          this.book_status = book_status;
+     public void setBook_status(LocalDate lx) {
+          this.book_status.put(lx,0);
      }
 }

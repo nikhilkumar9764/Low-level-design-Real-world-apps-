@@ -1,18 +1,20 @@
 package cleartrip_question;
 
+import java.time.LocalDate;
 import java.util.Date;
+import java.util.UUID;
 
 public class Bookings
 {
-    private String book_id;
+    private UUID book_id;
     private String guest_name;
     Hotel h1;
     Room r1;
+    private LocalDate checkindate;
+    private LocalDate checkoutdate;
 
-    private Date checkindate;
-    private Date checkoutdate;
-
-    public Bookings(String book_id, String guest_name, Hotel h1, Room r1, Date checkindate, Date checkoutdate) {
+    public Bookings(UUID book_id, String guest_name, Hotel h1, Room r1, LocalDate checkindate, LocalDate checkoutdate)
+    {
         this.book_id = book_id;
         this.guest_name = guest_name;
         this.h1 = h1;
@@ -21,12 +23,12 @@ public class Bookings
         this.checkoutdate = checkoutdate;
     }
 
-    public String getBook_id() {
+    public UUID getBook_id() {
         return book_id;
     }
 
     public void setBook_id(String book_id) {
-        this.book_id = book_id;
+        this.book_id = UUID.fromString(book_id);
     }
 
     public String getGuest_name() {
@@ -53,19 +55,19 @@ public class Bookings
         this.r1 = r1;
     }
 
-    public Date getCheckindate() {
+    public LocalDate getCheckindate() {
         return checkindate;
     }
 
-    public void setCheckindate(Date checkindate) {
+    public void setCheckindate(LocalDate checkindate) {
         this.checkindate = checkindate;
     }
 
-    public Date getCheckoutdate() {
+    public LocalDate getCheckoutdate() {
         return checkoutdate;
     }
 
-    public void setCheckoutdate(Date checkoutdate) {
+    public void setCheckoutdate(LocalDate checkoutdate) {
         this.checkoutdate = checkoutdate;
     }
 }
