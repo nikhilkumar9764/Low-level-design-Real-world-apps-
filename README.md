@@ -15,3 +15,10 @@ The key elements in this design would be
 the flow of the data to give a great UX
 making design decisions for database, cache
 deciding on two workflows - one for reader and one for commentator
+
+7. Chess website for single player to play against computer or 1v1 match
+   -- Matching service to match players around their rating (+/- 200 )
+   -- Analysis engine to analyse the game and give all the statistics related to their performance .
+   -- Anti cheating service to capture sequence of moves and determnine if it has any sign of engine being used .
+   -- use of websockets to capture the move on the server taking care of internet connectivity and validating the move and transmitting it in an already open
+   channel to other player . Cache of move being done close to the server storing gameid , gamestate and then checking if the move made was valid or not .
