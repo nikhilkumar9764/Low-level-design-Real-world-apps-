@@ -3,9 +3,9 @@ package snake_ladder_lld;
 public class Player {
 
     private String name;
-    private String id;
+    private int id;
 
-    public Player(String name, String id) {
+    public Player(String name, int id) {
         this.name = name;
         this.id = id;
     }
@@ -18,11 +18,11 @@ public class Player {
         this.name = name;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 }

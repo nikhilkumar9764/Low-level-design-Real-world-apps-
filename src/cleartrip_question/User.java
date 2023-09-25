@@ -1,16 +1,16 @@
 package cleartrip_question;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.time.LocalDate;
+import java.util.*;
+import java.util.stream.Collector;
 
 public class User
 {
     private String username;
     UserType u;
-    private List<Bookings> bookings_made;
-    private List<Hotel> hotels_booked;
+    private Optional<List<Bookings>> bookings_made;
+    private Optional<List<Hotel>> hotels_booked;
 
-    public User(String username,UserType u1, List<Bookings> bookings_made, List<Hotel> hotels_booked)
+    public User(String username, UserType u1, Optional<List<Hotel>> hotels_booked, Optional<List<Bookings>> bookings_made)
     {
         this.username = username;
         this.u = u1;
@@ -22,36 +22,50 @@ public class User
         return username;
     }
 
+    public void setBookings_made(Optional<List<Bookings>> bookings_made) {
+        this.bookings_made = bookings_made;
+    }
+
+    public void setHotels_booked(Optional<List<Hotel>> hotels_booked) {
+        this.hotels_booked = hotels_booked;
+    }
+
     public UserType getU() {
         return u;
     }
 
-    public List<Hotel> getHotels_booked()
+    public Optional<List<Hotel>> getHotels_booked()
     {
         return hotels_booked;
     }
 
-    public List<Bookings> getbookings_made()
+    public Optional<List<Bookings>> getbookings_made()
     {
         return bookings_made;
     }
 
     public void onboardProperty(Hotel h1)
     {
-        hotels_booked.add(h1);
+        List<Hotel> l1 = getHotels_booked().orElseGet(() -> List.of());
+        l1.add(h1);
+        hotels_booked = Optional.of(l1);
     }
 
     public void addBooking(Bookings b1)
     {
-        bookings_made.add(b1);
+        List<Bookings> l2 = getbookings_made().orElseGet(() -> List.of());
+        l2.add(b1);
+        bookings_made = Optional.of(l2);
     }
 
-    public List<Inventory> view_inventory(Date search)
+    public List<Inventory> view_inventory(LocalDate search)
     {
         List<Inventory> lres=new ArrayList<>();
-        for(Hotel h1 : hotels_booked)
+        List<Hotel> l3 = getHotels_booked().orElseGet(() -> List.of());
+        for(Hotel h1 : l3)
         {
-            for(Room r : h1.getRooms())
+            List<Room> lr =  h1.getRooms().orElseGet(()-> List.of());
+            for(Room r : lr)
             {
                  for(Inventory i : r.getInventory_avail())
                  {

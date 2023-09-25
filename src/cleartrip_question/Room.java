@@ -2,14 +2,20 @@ package cleartrip_question;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 public class Room
 {
-    private String room_id;
+    private UUID room_id;
     private String roomtype;
     private List<Inventory> inventory_avail;
 
-    public String getRoom_id() {
+    public Room(UUID  rid , String room_name) {
+        this.room_id = rid;
+        this.roomtype = room_name;
+    }
+
+    public UUID getRoom_id() {
         return room_id;
     }
 
@@ -23,7 +29,7 @@ public class Room
         this.inventory_avail =  i1;
     }
 
-    public void setRoom_id(String room_id) {
+    public void setRoom_id(UUID room_id) {
         this.room_id = room_id;
     }
 

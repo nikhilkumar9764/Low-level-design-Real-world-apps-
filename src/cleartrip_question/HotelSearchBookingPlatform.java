@@ -1,10 +1,7 @@
 package cleartrip_question;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 public class HotelSearchBookingPlatform
 {
@@ -16,30 +13,40 @@ public class HotelSearchBookingPlatform
           this.bookings = new ArrayList<>();
      }
 
-     public void onboard_property(User u1, Hotel h1)
+     public boolean onboard_property(User u1, Hotel h1)
      {
-          u1.onboardProperty(h1);
-          hotels.add(h1);
-          System.out.println("Property onboarded successfully!!");
+         if(!u1.getHotels_booked().stream().toList().contains(h1))
+         {
+             u1.onboardProperty(h1);
+             hotels.add(h1);
+             return true;
+         }
+         else {
+              return false;
+         }
      }
 
-     public void addinventory(User u1, Hotel h1, Room r1,double price, int room_avail)
+     public void addinventory(Hotel h1, Room r1,double price, int room_avail)
      {
           Inventory i1 = new Inventory(h1,r1,price,room_avail);
           r1.getInventory_avail().add(i1);
-          h1.getRooms().add(r1);
+          List<Room> lroom = h1.getRooms().orElseGet(() -> List.of());
+          lroom.add(r1);
+          h1.setRooms(lroom);
           System.out.println("Inventory added!!");
      }
 
-     public List<Hotel> search_query(String city , double priceStart , double priceEnd , int star_rating , Date checkin,
-                                     Date checkout)
+     public List<Hotel> search_query(String city , double priceStart , double priceEnd , int star_rating , LocalDate checkin,
+                                     LocalDate checkout)
      {
            List<Hotel> res = new ArrayList<>();
            for(Hotel h : hotels)
            {
-                if(h.getCity().equalsIgnoreCase(city) && h.getStar_rating()>=star_rating)
+                Integer srating = h.getStar_rating().orElseGet(()-> -1);
+                if(h.getCity().equalsIgnoreCase(city) && srating >=star_rating)
                 {
-                     for(Room r1: h.getRooms())
+                     List<Room> lr =  h.getRooms().orElseGet(()-> List.of());
+                     for(Room r1: lr)
                      {
                          for(Inventory iv : r1.getInventory_avail())
                          {
@@ -60,7 +67,8 @@ public class HotelSearchBookingPlatform
      {
           for(Hotel h: hotels)
           {
-               if(h.getCity().equalsIgnoreCase(city) && h.getRooms().contains(r))
+              List<Room> lr =  h.getRooms().orElseGet(()-> List.of());
+               if(h.getCity().equalsIgnoreCase(city) && lr.contains(r))
                {
                     for(Inventory i : r.getInventory_avail())
                     {
@@ -79,9 +87,9 @@ public class HotelSearchBookingPlatform
           }
      }
 
-     public List<Bookings> view_bookings(User ux)
+     public Optional<List<Bookings>> view_bookings(User ux)
      {
-          List<Bookings> l2 = ux.getbookings_made();
+          Optional<List<Bookings>> l2 = ux.getbookings_made();
           return l2;
      }
 
@@ -96,7 +104,10 @@ public class HotelSearchBookingPlatform
                   to_delete = bookings.get(j);
               }
          }
-         boolean res = u1.getbookings_made().remove(to_delete);
+         List<Bookings> lres = u1.getbookings_made().orElseGet(()-> List.of());
+         boolean res = lres.remove(to_delete);
+
+         u1.setBookings_made(Optional.of(lres));
          if(res == true)
          {
               System.out.println("Booking was deleted!!");

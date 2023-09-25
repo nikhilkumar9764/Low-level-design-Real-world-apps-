@@ -125,7 +125,7 @@ public class SnakeLadderService
       return org < initialNumPlayers;
   }
 
-  private void startGame()
+  public void startGame()
   {
       while(!hasGameCompleted())
       {
